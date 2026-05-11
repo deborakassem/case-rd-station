@@ -1,0 +1,5 @@
+[
+    {"user_id": "user3", "event_type": "logout", "timestamp": "2025-07-01T16:00:00Z", "amount": null},
+    {"user_id": "", "event_type": "login", "timestamp": "2025-09-01T09:00:00Z", "amount": null},
+    {"user_id": "user4", "event_type": "purchase", "timestamp": "2025-09-01T11:00:00Z", "amount": -50.0}
+]
