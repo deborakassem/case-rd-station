@@ -217,5 +217,7 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
-# Data files
+# Data/output files
 *.csv
+deadletter.json
+summary.json
