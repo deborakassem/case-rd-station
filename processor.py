@@ -1,7 +1,7 @@
 import argparse
 from datetime import datetime, timezone, timedelta
 
-from src.aggregator import aggregate_events
+from calculator import calculate_events_metrics
 from src.reader import read_events
 from src.validator import (
     validate_event,
@@ -66,7 +66,7 @@ def process_events(
     ]
 
     # Agregação
-    stats = aggregate_events(events=filtered_events)
+    stats = calculate_events_metrics(events=filtered_events)
 
     # Escrita final
     window = {
