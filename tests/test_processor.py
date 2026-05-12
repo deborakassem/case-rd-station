@@ -2,7 +2,7 @@ import unittest
 from datetime import datetime, timezone, timedelta
 
 from src.validator import validate_event, filter_event
-from src.calculator import calculate_events_metrics
+from src.aggregator import aggregate_events_metrics
 
 
 class TestValidateEvent(unittest.TestCase):
@@ -120,9 +120,9 @@ class TestFilterEvent(unittest.TestCase):
         self.assertTrue(result)
 
 
-class TestCalculateEventsMetrics(unittest.TestCase):
+class TestAggregateEventsMetrics(unittest.TestCase):
     """
-    Testes unitários para a função calculate_events_metrics do módulo calculator.py.
+    Testes unitários para a função aggregate_events_metrics do módulo aggregator.py.
     """
 
     def setUp(self):
@@ -132,29 +132,29 @@ class TestCalculateEventsMetrics(unittest.TestCase):
         ]
 
     def test_usuarios_unicos(self):
-        stats = calculate_events_metrics(self.events)
+        stats = aggregate_events_metrics(self.events)
         self.assertEqual(stats["unique_users"], 2)
 
     def test_contagem_de_eventos(self):
-        stats = calculate_events_metrics(self.events)
+        stats = aggregate_events_metrics(self.events)
         self.assertEqual(stats["event_counts"]["login"], 1)
         self.assertEqual(stats["event_counts"]["purchase"], 1)
         self.assertEqual(stats["event_counts"]["logout"], 0)
 
     def test_total_purchase_amount(self):
-        stats = calculate_events_metrics(self.events)
+        stats = aggregate_events_metrics(self.events)
         self.assertEqual(stats["total_purchase_amount"], 200.0)
 
     def test_average_purchase_amount(self):
-        stats = calculate_events_metrics(self.events)
+        stats = aggregate_events_metrics(self.events)
         self.assertEqual(stats["average_purchase_amount"], 200.0)
 
     def test_purchase_by_user(self):
-        stats = calculate_events_metrics(self.events)
+        stats = aggregate_events_metrics(self.events)
         self.assertEqual(stats["purchase_by_user"]["user2"], 200.0)
 
     def test_lista_vazia(self):
-        stats = calculate_events_metrics([])
+        stats = aggregate_events_metrics([])
         self.assertEqual(stats["unique_users"], 0)
         self.assertEqual(stats["total_purchase_amount"], 0.0)
         self.assertEqual(stats["average_purchase_amount"], 0.0)
@@ -163,7 +163,7 @@ class TestCalculateEventsMetrics(unittest.TestCase):
         events = [
             {"user_id": "user1", "event_type": "login", "timestamp": "2025-09-01T10:00:00Z", "amount": None},
         ]
-        stats = calculate_events_metrics(events)
+        stats = aggregate_events_metrics(events)
         self.assertEqual(stats["total_purchase_amount"], 0.0)
         self.assertEqual(stats["average_purchase_amount"], 0.0)
         self.assertEqual(stats["purchase_by_user"], {})
@@ -173,7 +173,7 @@ class TestCalculateEventsMetrics(unittest.TestCase):
             {"user_id": "user1", "event_type": "purchase", "timestamp": "2025-09-01T10:00:00Z", "amount": 100.0},
             {"user_id": "user1", "event_type": "purchase", "timestamp": "2025-09-01T11:00:00Z", "amount": 200.0},
         ]
-        stats = calculate_events_metrics(events)
+        stats = aggregate_events_metrics(events)
         self.assertEqual(stats["purchase_by_user"]["user1"], 300.0)
         self.assertEqual(stats["average_purchase_amount"], 150.0)
 

@@ -1,9 +1,9 @@
 from src.validator import VALID_EVENT_TYPES
 
 
-def calculate_events_metrics(events: list[dict]) -> dict:
+def aggregate_events_metrics(events: list[dict]) -> dict:
     """
-    Função que calcula as estatísticas dos eventos válidos e filtrados.
+    Função que calcula e agrega as estatísticas dos eventos válidos.
 
     Parâmetros
     ----------

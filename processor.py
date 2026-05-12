@@ -1,7 +1,7 @@
 import argparse
 from datetime import datetime, timezone, timedelta
 
-from calculator import calculate_events_metrics
+from src.aggregator import aggregate_events_metrics
 from src.reader import read_events
 from src.validator import (
     validate_event,
@@ -65,10 +65,10 @@ def process_events(
         )
     ]
 
-    # Agregação
-    stats = calculate_events_metrics(events=filtered_events)
+    # Cálculos e agregação das métricas
+    stats = aggregate_events_metrics(events=filtered_events)
 
-    # Escrita final
+    # Escrita dos resultados
     window = {
         "from": (execution_time - timedelta(days=window_days)).strftime("%Y-%m-%d"),
         "to": execution_time.strftime("%Y-%m-%d"),
